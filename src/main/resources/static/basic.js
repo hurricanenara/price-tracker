@@ -123,13 +123,43 @@ function showProduct() {
      * 관심상품 HTML 만드는 함수: addProductItem
      */
     // 1. GET /api/products 요청
+    $.ajax({
+        type: "GET",
+        url: `/api/products`,
+        success: function (res) {
     // 2. 관심상품 목록, 검색결과 목록 비우기
+            $("#product-container").empty();
+            $("#search-result-box").empty();
+            for (let i = 0; i < res.length; i++) {
+                const product = res[i];
+                const tempHtml = addProductItem(product);
+                $("#product-container").append(tempHtml);
+            }
+        }
+    })
     // 3. for 문마다 관심 상품 HTML 만들어서 관심상품 목록에 붙이기!
 }
 
 function addProductItem(product) {
     // link, image, title, lprice, myprice 변수 활용하기
-    return ``;
+    console.log(product);
+    return `<div class="product-card" onclick="window.location.href='${product.link}'">
+            <div class="card-header">
+                <img src="${product.image}"
+                     alt="">
+            </div>
+            <div class="card-body">
+                <div class="title">
+                    ${product.title}
+                </div>
+                <div class="lprice">
+                    <span>${numberWithCommas(product.lprice)}</span>원
+                </div>
+                <div class="${product.lprice <= product.myprice ? "isgood" : "none"}">
+                    최저가
+                </div>
+            </div>
+        </div>`;
 }
 
 function setMyprice() {
