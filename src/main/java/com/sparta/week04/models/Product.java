@@ -2,6 +2,7 @@ package com.sparta.week04.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
@@ -39,6 +40,7 @@ public class Product extends Timestamped{
         this.myprice = 0;
     }
 
+    @Transactional
     public void update(ProductMypriceRequestDto requestDto) {
         this.myprice = requestDto.getMyprice();
     }
