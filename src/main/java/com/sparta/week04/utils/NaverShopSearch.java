@@ -4,7 +4,7 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 public class NaverShopSearch {
-    public String search() {
+    public String search(String query) {
         RestTemplate rest = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Naver-Client-Id", "rY_p3zqWgwMOmMdWudXs");
@@ -12,7 +12,7 @@ public class NaverShopSearch {
         String body = "";
 
         HttpEntity<String> requestEntity = new HttpEntity<String>(body, headers);
-        ResponseEntity<String> responseEntity = rest.exchange("https://openapi.naver.com/v1/search/shop.json?query=아디다스", HttpMethod.GET, requestEntity, String.class);
+        ResponseEntity<String> responseEntity = rest.exchange("https://openapi.naver.com/v1/search/shop.json?query=" + query, HttpMethod.GET, requestEntity, String.class);
         HttpStatus httpStatus = responseEntity.getStatusCode();
         int status = httpStatus.value();
         String response = responseEntity.getBody();
@@ -24,6 +24,6 @@ public class NaverShopSearch {
 
     public static void main(String[] args) {
         NaverShopSearch naverShopSearch = new NaverShopSearch();
-        naverShopSearch.search();
+        naverShopSearch.search("iMac");
     }
 }
