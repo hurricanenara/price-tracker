@@ -1,9 +1,13 @@
 package com.sparta.week04.utils;
 
+import com.sparta.week04.models.ItemDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NaverShopSearch {
     public String search(String query) {
@@ -24,22 +28,29 @@ public class NaverShopSearch {
         return response;
     }
 
-    public static void main(String[] args) {
-        NaverShopSearch naverShopSearch = new NaverShopSearch();
-        String result = naverShopSearch.search("iMac");
+    public List<ItemDto> fromJSONtoItems(String result) {
         JSONObject rjson = new JSONObject(result); // use after adding json to dependencies
         JSONArray items = rjson.getJSONArray("items"); // get items out of JS Array
+        List<ItemDto> itemDtoList = new ArrayList<>();
+
         for (int i = 0; i < items.length(); i++) {
             JSONObject itemJson = items.getJSONObject(i);
+            ItemDto itemDto = new ItemDto(itemJson);
+            itemDtoList.add(itemDto);
 //            System.out.println(itemJson);
             // get info out of json item
-            String title = itemJson.getString("title");
-            String image = itemJson.getString("image");
-            int lprice = itemJson.getInt("lprice");
-            String link = itemJson.getString("link");
+//            String title = itemJson.getString("title");
+//            String image = itemJson.getString("image");
+//            int lprice = itemJson.getInt("lprice");
+//            String link = itemJson.getString("link");
 //            System.out.println(lprice);
         }
 
-
+        return itemDtoList;
     }
+
+//    public static void main(String[] args) {
+//        NaverShopSearch naverShopSearch = new NaverShopSearch();
+//        String result = naverShopSearch.search("iMac");
+//    }
 }
