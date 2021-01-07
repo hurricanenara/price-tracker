@@ -29,10 +29,9 @@ public class ProductRestController {
         return productRepository.save(product);
     }
 
-    @PutMapping("/api/products/{targetId}")
-    public Long updateProduct(@PathVariable Long targetId, ProductMypriceRequestDto requestDto) {
-        productService.update(targetId, requestDto);
-        return targetId;
+    @PutMapping("/api/products/{id}") // targetId or id?
+    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto) {
+        return productService.update(id, requestDto);
     }
 
 }

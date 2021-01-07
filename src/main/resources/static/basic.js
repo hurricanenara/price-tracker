@@ -169,7 +169,8 @@ function setMyprice() {
      // * 2. 만약 값을 입력하지 않았으면 alert를 띄우고 중단한다.
     if (desiredPrice === "") {
         alert("Please set a desired price!");
-        $("#myprice").focus();
+        // $("#myprice").focus();
+        return;
     }
      // * 3. PUT /api/product/${targetId} 에 data를 전달한다.
      // *    주의) contentType: "application/json",
@@ -182,13 +183,13 @@ function setMyprice() {
         data: JSON.stringify({desiredPrice: desiredPrice}),
         success: function (response) {
             console.log(response);
+            $("#container").removeClass('active');
+            alert("Your desired price has been set!")
+            window.location.reload();
         }
     });
      // * 4. 모달을 종료한다. $('#container').removeClass('active');
-    $("#container").removeClass('active');
      // * 5, 성공적으로 등록되었음을 알리는 alert를 띄운다.
-    alert("Your desired price has been set!")
      // * 6. 창을 새로고침한다. window.location.reload();
-    window.location.reload();
 
 }
