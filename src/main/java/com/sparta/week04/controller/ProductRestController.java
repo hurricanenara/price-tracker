@@ -1,13 +1,12 @@
 package com.sparta.week04.controller;
 
 import com.sparta.week04.models.Product;
+import com.sparta.week04.models.ProductMypriceRequestDto;
 import com.sparta.week04.models.ProductRepository;
 import com.sparta.week04.models.ProductRequestDto;
+import com.sparta.week04.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +15,7 @@ import java.util.List;
 public class ProductRestController {
 
     private final ProductRepository productRepository;
+    private final ProductService productService;
 
     // 등록된 전체 상품 목록 조회
     @GetMapping("/api/products")
@@ -27,6 +27,12 @@ public class ProductRestController {
     public Product createProduct(@RequestBody ProductRequestDto requestDto) {
         Product product = new Product(requestDto);
         return productRepository.save(product);
+    }
+
+    @PutMapping("/api/products/{targetId}")
+    public Long updateProduct(@PathVariable Long targetId, ProductMypriceRequestDto requestDto) {
+        productService.update(targetId, requestDto);
+        return targetId;
     }
 
 }

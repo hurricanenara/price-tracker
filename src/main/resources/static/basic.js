@@ -163,16 +163,32 @@ function addProductItem(product) {
 }
 
 function setMyprice() {
-    /**
-     * 숙제! myprice 값 설정하기.
-     * 1. id가 myprice 인 input 태그에서 값을 가져온다.
-     * 2. 만약 값을 입력하지 않았으면 alert를 띄우고 중단한다.
-     * 3. PUT /api/product/${targetId} 에 data를 전달한다.
-     *    주의) contentType: "application/json",
-     *         data: JSON.stringify({myprice: myprice}),
-     *         빠뜨리지 말 것!
-     * 4. 모달을 종료한다. $('#container').removeClass('active');
-     * 5, 성공적으로 등록되었음을 알리는 alert를 띄운다.
-     * 6. 창을 새로고침한다. window.location.reload();
-     */
+     // * 숙제! myprice 값 설정하기.
+     // * 1. id가 myprice 인 input 태그에서 값을 가져온다.
+    const desiredPrice = $("#myprice").val();
+     // * 2. 만약 값을 입력하지 않았으면 alert를 띄우고 중단한다.
+    if (desiredPrice === "") {
+        alert("Please set a desired price!");
+        $("#myprice").focus();
+    }
+     // * 3. PUT /api/product/${targetId} 에 data를 전달한다.
+     // *    주의) contentType: "application/json",
+     // *         data: JSON.stringify({myprice: myprice}),
+     // *         빠뜨리지 말 것!
+    $.ajax({
+        type: "PUT",
+        url: `/api/products/${targetId}`,
+        contentType: "application/json",
+        data: JSON.stringify({desiredPrice: desiredPrice}),
+        success: function (response) {
+            console.log(response);
+        }
+    });
+     // * 4. 모달을 종료한다. $('#container').removeClass('active');
+    $("#container").removeClass('active');
+     // * 5, 성공적으로 등록되었음을 알리는 alert를 띄운다.
+    alert("Your desired price has been set!")
+     // * 6. 창을 새로고침한다. window.location.reload();
+    window.location.reload();
+
 }
